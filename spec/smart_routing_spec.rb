@@ -30,29 +30,29 @@ RSpec.describe SmartRouting do
 
     it "allows open_tomeout to be configured" do
       begin
-        old = SmartRouting.open_tomeout
-        SmartRouting.open_tomeout = 5
+        old = SmartRouting.open_timeout
+        SmartRouting.open_timeout = 5
 
-        expect(SmartRouting.open_tomeout).to eq(5)
+        expect(SmartRouting.open_timeout).to eq(5)
       ensure
-        SmartRouting.open_tomeout = old
+        SmartRouting.open_timeout = old
       end
     end
 
-    it "allows read_tomeout to be configured" do
+    it "allows read_timeout to be configured" do
       begin
-        old = SmartRouting.read_tomeout
-        SmartRouting.read_tomeout = 10
+        old = SmartRouting.read_timeout
+        SmartRouting.read_timeout = 10
 
-        expect(SmartRouting.read_tomeout).to eq(10)
+        expect(SmartRouting.read_timeout).to eq(10)
       ensure
-        SmartRouting.read_tomeout = old
+        SmartRouting.read_timeout = old
       end
     end
 
-    it "has default open_tomeout and read_tomeout" do
-      expect(SmartRouting.open_tomeout).to eq(20)
-      expect(SmartRouting.read_tomeout).to eq(40)
+    it "has default open_timeout and read_timeout" do
+      expect(SmartRouting.open_timeout).to eq(20)
+      expect(SmartRouting.read_timeout).to eq(40)
     end
 
     it "allows proxy to be configured" do
@@ -62,7 +62,7 @@ RSpec.describe SmartRouting do
 
         expect(SmartRouting.proxy).to eq("http://127.0.0.1:3214/")
       ensure
-        SmartRouting.read_tomeout = old
+        SmartRouting.read_timeout = old
       end
     end
 
