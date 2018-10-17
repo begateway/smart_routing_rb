@@ -16,6 +16,10 @@ module SmartRouting
         SmartRouting::Response.new client.request(:put, resource_path(id), {account: params})
       end
 
+      def get(id)
+        SmartRouting::Response.new client.request(:get, resource_path(id))
+      end
+
       private
       def resource_path(id = nil)
         "/api/admin/accounts".tap do |path|

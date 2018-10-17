@@ -16,4 +16,12 @@ module AdminResponseFixtures
   def failed_update_account_response
     failed_creation_account_response
   end
+
+  def successful_get_account_response
+    successful_creation_account_response
+  end
+
+  def failed_get_account_response
+    %!{"error":{"message":"Not found account by id: ...","help":"https://doc.ecomcharge.com/codes/resource_not_found","friendly_message":"Resource not found","code":"resource_not_found"}}!
+  end
 end

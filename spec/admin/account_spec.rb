@@ -4,6 +4,7 @@ RSpec.describe SmartRouting::Admin::Account do
   context ".create" do
     let(:url) { SmartRouting.api_host + "/api/admin/accounts" }
     let(:params) { {name: "Shop #1"} }
+
     subject { account.create(params) }
 
     context "when params are valid" do
@@ -57,6 +58,7 @@ RSpec.describe SmartRouting::Admin::Account do
     let(:id) { "10429c03-a343-4b24-9b03-7e1c360f7467" }
     let(:url) { SmartRouting.api_host + "/api/admin/accounts/#{id}" }
     let(:params) { {name: "Shop #1"} }
+
     subject { account.update(id, params) }
 
     context "when params are valid" do
@@ -65,7 +67,7 @@ RSpec.describe SmartRouting::Admin::Account do
           to_return(status: 200, body: AdminResponseFixtures.successful_update_account_response)
       end
 
-      it "updates account and return account info" do
+      it "updates account and returns account info" do
         expect(subject.status).to be 200
 
         expect(subject.success?).to be true
@@ -100,6 +102,53 @@ RSpec.describe SmartRouting::Admin::Account do
         expect(subject.error.friendly_message).to eq("Name can't be blank.")
         expect(subject.error.help).to eq("https://doc.ecomcharge.com/codes/validation_error")
         expect(subject.error.errors).to eq("name" => ["can't be blank"])
+      end
+    end
+  end
+
+  context ".get" do
+    let(:id) { "10429c03-a343-4b24-9b03-7e1c360f7467" }
+    let(:url) { SmartRouting.api_host + "/api/admin/accounts/#{id}" }
+
+    subject { account.get(id) }
+
+    context "when account exists" do
+      before do
+        stub_request(:get, url).
+          to_return(status: 200, body: AdminResponseFixtures.successful_get_account_response)
+      end
+
+      it "returns account info" do
+        expect(subject.status).to be 200
+
+        expect(subject.success?).to be true
+
+        expect(subject.data.to_h.keys).to contain_exactly *%i(id token name created_at updated_at)
+
+        expect(subject.data.id).to eq(id)
+        expect(subject.data.token).to eq("9FHPid4dvvwLc1km2deoApIZshKpXvGOO1Jj4ktmyHWAvGpjicaq7ziZT7Pm3arC")
+        expect(subject.data.name).to eq("Shop #1")
+        expect(subject.data.created_at.to_s).to_not eq ""
+        expect(subject.data.updated_at.to_s).to_not eq ""
+      end
+    end
+
+    context "when account doesn't exist" do
+
+      before do
+        stub_request(:get, url).
+          to_return(status: 422, body: AdminResponseFixtures.failed_get_account_response)
+      end
+
+      it "returns error response" do
+        expect(subject.status).to be 422
+
+        expect(subject.error?).to be true
+
+        expect(subject.error.to_h.keys).to contain_exactly *%i(code message friendly_message help)
+
+        expect(subject.error.code).to eq("resource_not_found")
+        expect(subject.error.errors).to be nil
       end
     end
   end
