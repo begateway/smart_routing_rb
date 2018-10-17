@@ -6,8 +6,8 @@ module SmartRouting
   module Connection
 
     def request(method, path, params = nil)
-      connection.public_send(method, path, path) do |request|
-        if method == :post
+      connection.public_send(method, path, params) do |request|
+        if [:put, :post].include?(method)
           request.headers['Content-Type'] = 'application/json'
           request.body = params.to_json if params
         end

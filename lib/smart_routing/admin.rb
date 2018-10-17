@@ -17,7 +17,3 @@ module SmartRouting
 
   end
 end
-
-# SmartRouting.api_host = "http://0.0.0.0:4000"
-# client = SmartRouting::Admin.new(auth_login: "admin", auth_password: "bsUHxEMR7pALfzT6gwqNMuWUyaNQ6o8")
-# response = client.account.create(name: "Box Shop")
