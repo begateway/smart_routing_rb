@@ -24,7 +24,7 @@ module SmartRouting
     end
 
     def error
-      @error ||=  OpenStruct.new(body["error"])
+      @error ||= OpenStruct.new(body["error"])
     end
 
     def raw

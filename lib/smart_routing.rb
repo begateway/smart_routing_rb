@@ -3,6 +3,7 @@ require "smart_routing/version"
 require "smart_routing/response"
 require "smart_routing/connection"
 require "smart_routing/admin"
+require "smart_routing/user"
 
 module SmartRouting
 

@@ -5,6 +5,7 @@ require 'webmock/rspec'
 
 require "support/client_helpers"
 require "support/admin_response_fixtures"
+require "support/user_response_fixtures"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
