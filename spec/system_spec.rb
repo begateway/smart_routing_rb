@@ -12,7 +12,7 @@ RSpec.describe "system" do
       SmartRouting.logger = logger
 
       stub_request(:post, url).
-        to_return(body: AdminResponseFixtures.successful_creation_account_response)
+        to_return(status: 201, body: AdminResponseFixtures.successful_creation_account_response)
 
       account.create({})
     end
@@ -23,7 +23,7 @@ RSpec.describe "system" do
       expect(subject).to include("Request: start POST to #{url}")
       expect(subject).to_not include("9FHPid4dvvwLc1km2deoApIZshKpXvGOO1Jj4ktmyHWAvGpjicaq7ziZT7Pm3arC")
       expect(subject).to include("9FHPi*****m3arC")
-      expect(subject).to include("Response: status 200")
+      expect(subject).to include("Response: status 201")
     end
   end
 

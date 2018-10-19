@@ -21,8 +21,101 @@ Or install it yourself as:
     $ gem install smart_routing
 
 ## Usage
+---------------------------
 
-TODO: Write usage instructions here
+### Configuration
+
+```ruby
+# API host
+SmartRouting.api_host = "https://api.smart-routing.ecomcharge.com"
+# proxy
+SmartRouting.proxy = "http://192.18.10.1:3129"
+# logger
+SmartRouting.logger = Rails.logger
+# open/read timeouts in seconds
+SmartRouting.open_timeout = 5  # default: 20
+SmartRouting.read_timeout = 10 # default: 40
+```
+
+### Managing accounts
+
+```ruby
+# create admin client
+client = SmartRouting::Admin.new(auth_login: 'login', auth_password: 'password')
+
+# create account
+account = SmartRouting::Admin::Account.new(client)
+response = account.create(name: "Shop #1")
+if response.success?
+   puts "Status code" + response.status   # should return 201
+   puts "Account with ID #{response.data.id} is created"
+   puts response.data.to_h                # all account attributes as hash
+   # or
+   puts response.data.token
+   puts response.data.name
+   puts response.data.created_at
+   puts response.data.updated_at
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+  puts response.error.code
+  puts response.error.message             # message for developers
+  puts response.error.friendly_message    # message for users
+  puts response.error.help
+
+  # if  response.error.code == "validation_error"
+  # you can retrieve all error attributes as hash
+  subject.error.errors                    # => {"name" => ["can't be blank"], "email" => ["is invalid"]}
+end
+
+# get account
+response = account.get("111111-a343-4b24-9b03-7e1c360f7467")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all account attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# update account
+response = account.update("111111-a343-4b24-9b03-7e1c360f7467", name: "New Shop")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all account attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+```
+
+### Rule verification
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# create rule object
+rule = SmartRouting::User::Rule.new(client)
+# verify rules
+response = rule.verify(bin_country: "UK", card_bin: "US", txn_amount: 150, txn_currency: "EUR")
+if response.success?
+   puts "Status code" + response.status   # should return 200
+   puts response.data.to_h                # all account attributes as hash
+   # or
+   # when rule is matched
+   puts response.data.object              # returend_object_value
+   puts response.data.rules               # [{"state"=>"matched","description"=>"..","alias"=>"card_bin_country"}]
+   # when rule is not metched
+   puts response.data.object              # nil
+   puts response.data.rules               # [{"state"=>"no_matched","description"=>"..","alias"=>"card_bin_country"}]
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+end
+
+# for testing verification you should sendt test = true
+response = rule.verify(test: true, bin_country: "UK", card_bin: "US")
+ ```
 
 ## Development
 
