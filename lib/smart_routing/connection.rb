@@ -5,6 +5,10 @@ require "smart_routing/middleware"
 module SmartRouting
   module Connection
 
+    Faraday::Request.register_middleware request_logger: Middleware::RequestLogger
+    Faraday::Response.register_middleware response_logger: Middleware::ResponseLogger
+    Faraday::Response.register_middleware parse_json: Middleware::ParseJson
+
     def request(method, path, params = nil)
       connection.public_send(method, path, params) do |request|
         if [:put, :post].include?(method)
@@ -16,7 +20,7 @@ module SmartRouting
       end
     rescue Faraday::Error => e
       response = OpenStruct.new(status: 500, body: error_body(e.to_s))
-      Response::Base.new(response)
+      Response.new(response)
     end
 
     def connection
@@ -26,7 +30,9 @@ module SmartRouting
 
           connection.basic_auth(auth_login, auth_password) if auth_login
           connection.request :json
-          connection.use SmartRouting::Middleware::ParseJson
+          connection.request :request_logger
+          connection.response :parse_json
+          connection.response :response_logger
 
           connection
         end

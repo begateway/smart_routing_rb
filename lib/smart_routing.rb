@@ -1,5 +1,6 @@
 require "smart_routing/version"
 
+require "smart_routing/log_sanitizer"
 require "smart_routing/response"
 require "smart_routing/connection"
 require "smart_routing/admin"
