@@ -8,7 +8,7 @@ require "smart_routing/user"
 
 module SmartRouting
 
-  @api_host = "https://api.smart-routing.ecomcharge.com"
+  @api_host = "https://api.smart-routing.begateway.com"
 
   @logger = nil
 

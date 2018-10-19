@@ -48,7 +48,7 @@ RSpec.describe SmartRouting::Admin::Account do
         expect(subject.error.code).to eq("validation_error")
         expect(subject.error.message).to eq("Parameters are invalid")
         expect(subject.error.friendly_message).to eq("Name can't be blank.")
-        expect(subject.error.help).to eq("https://doc.ecomcharge.com/codes/validation_error")
+        expect(subject.error.help).to eq("https://doc.begateway.com/codes/validation_error")
         expect(subject.error.errors).to eq("name" => ["can't be blank"])
       end
     end
@@ -100,7 +100,7 @@ RSpec.describe SmartRouting::Admin::Account do
         expect(subject.error.code).to eq("validation_error")
         expect(subject.error.message).to eq("Parameters are invalid")
         expect(subject.error.friendly_message).to eq("Name can't be blank.")
-        expect(subject.error.help).to eq("https://doc.ecomcharge.com/codes/validation_error")
+        expect(subject.error.help).to eq("https://doc.begateway.com/codes/validation_error")
         expect(subject.error.errors).to eq("name" => ["can't be blank"])
       end
     end

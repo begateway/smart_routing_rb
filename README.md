@@ -27,7 +27,7 @@ Or install it yourself as:
 
 ```ruby
 # API host
-SmartRouting.api_host = "https://api.smart-routing.ecomcharge.com"
+SmartRouting.api_host = "https://api.smart-routing.begateway.com"
 # proxy
 SmartRouting.proxy = "http://192.18.10.1:3129"
 # logger

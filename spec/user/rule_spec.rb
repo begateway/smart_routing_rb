@@ -71,7 +71,7 @@ RSpec.describe SmartRouting::User::Rule do
         expect(subject.error.code).to eq("validation_error")
         expect(subject.error.message).to eq("Parameters are invalid")
         expect(subject.error.friendly_message).to eq("Bin_country must be string.")
-        expect(subject.error.help).to eq("https://doc.ecomcharge.com/codes/validation_error")
+        expect(subject.error.help).to eq("https://doc.begateway.com/codes/validation_error")
         expect(subject.error.errors).to eq("bin_country" => ["must be string"])
       end
     end

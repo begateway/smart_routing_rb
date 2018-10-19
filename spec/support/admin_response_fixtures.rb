@@ -6,7 +6,7 @@ module AdminResponseFixtures
   end
 
   def failed_creation_account_response
-    %!{"error":{"message":"Parameters are invalid","help":"https://doc.ecomcharge.com/codes/validation_error","friendly_message":"Name can't be blank.","errors":{"name":["can't be blank"]},"code":"validation_error"}}!
+    %!{"error":{"message":"Parameters are invalid","help":"https://doc.begateway.com/codes/validation_error","friendly_message":"Name can't be blank.","errors":{"name":["can't be blank"]},"code":"validation_error"}}!
   end
 
   def successful_update_account_response
@@ -22,6 +22,6 @@ module AdminResponseFixtures
   end
 
   def failed_get_account_response
-    %!{"error":{"message":"Not found account by id: ...","help":"https://doc.ecomcharge.com/codes/resource_not_found","friendly_message":"Resource not found","code":"resource_not_found"}}!
+    %!{"error":{"message":"Not found account by id: ...","help":"https://doc.begateway.com/codes/resource_not_found","friendly_message":"Resource not found","code":"resource_not_found"}}!
   end
 end

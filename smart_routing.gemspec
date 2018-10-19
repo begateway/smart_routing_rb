@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Ruby client for SmartRouting system}
   spec.description   = %q{Ruby client for SmartRouting system}
-  spec.homepage      = "https://www.ecomcharge.com/solutions/smart_routing/"
+  spec.homepage      = "https://www.begateway.com/solutions/smart_routing/"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
