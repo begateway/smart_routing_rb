@@ -44,7 +44,7 @@ SmartRouting.read_timeout = 10 # default: 40
 client = SmartRouting::Admin.new(auth_login: 'login', auth_password: 'password')
 
 # create account
-account = SmartRouting::Admin::Account.new(client)
+account = client.account # or SmartRouting::Admin::Account.new(client)
 response = account.create(name: "Shop #1")
 if response.success?
    puts "Status code" + response.status   # should return 201
@@ -95,7 +95,7 @@ end
 # create user client
 client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
 # create rule object
-rule = SmartRouting::User::Rule.new(client)
+rule = client.rule # or SmartRouting::User::Rule.new(client)
 # verify rules
 response = rule.verify(bin_country: "UK", card_bin: "US", txn_amount: 150, txn_currency: "EUR")
 if response.success?
