@@ -2,12 +2,12 @@ require "shared_examples/responses"
 
 RSpec.describe SmartRouting::User::Set do
   let(:set) { described_class.new(user_client) }
+  let(:data_attrs)  { %i(id name value read_only created_at updated_at account_id) }
 
   context ".create" do
     let(:url) { SmartRouting.api_host + "/api/user/sets" }
     let(:request_params) { {name: "AllowedCountries", value: ["UK", "FR", "DE"]} }
     let(:http_status) { 201 }
-    let(:data_attrs)  { %i(id name value read_only created_at updated_at account_id) }
 
     subject { set.create(request_params) }
 
@@ -39,7 +39,6 @@ RSpec.describe SmartRouting::User::Set do
     let(:url) { SmartRouting.api_host + "/api/user/sets/#{id}" }
     let(:request_params) { {value: ["UK", "FR", "DE"]} }
     let(:http_status) { 200 }
-    let(:data_attrs)  { %i(id name value read_only created_at updated_at account_id) }
 
     subject { set.update(id, request_params) }
 
@@ -70,7 +69,6 @@ RSpec.describe SmartRouting::User::Set do
     let(:id) { "10429c03-a343-4b24-9b03-7e1c360f7467" }
     let(:url) { SmartRouting.api_host + "/api/user/sets/#{id}" }
     let(:http_status) { 200 }
-    let(:data_attrs)  { %i(id name value read_only created_at updated_at account_id) }
 
     subject { set.get(id) }
 
@@ -85,7 +83,6 @@ RSpec.describe SmartRouting::User::Set do
   context ".all" do
     let(:url) { SmartRouting.api_host + "/api/user/sets" }
     let(:http_status) { 200 }
-    let(:data_attrs)  { %i(id name value read_only created_at updated_at account_id) }
 
     subject { set.all }
 
