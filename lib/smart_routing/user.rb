@@ -1,4 +1,5 @@
 require_relative "user/rule"
+require_relative "user/set"
 
 module SmartRouting
   class User
@@ -13,6 +14,10 @@ module SmartRouting
 
     def rule
       @rule ||= User::Rule.new(self)
+    end
+
+    def set
+      @set ||= User::Set.new(self)
     end
 
   end

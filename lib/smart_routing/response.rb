@@ -20,7 +20,13 @@ module SmartRouting
     end
 
     def data
-      @data ||= OpenStruct.new(body["data"])
+      @data ||= begin
+                  if body["data"].is_a?(Array)
+                    prepare_collection(body["data"])
+                  else
+                    OpenStruct.new(body["data"])
+                  end
+                end
     end
 
     def error
@@ -34,6 +40,12 @@ module SmartRouting
     protected
     def body
       @body ||= response.body.is_a?(Hash) ? response.body : {}
+    end
+
+    def prepare_collection(collection)
+      [].tap do |result|
+        collection.each {|element| result << OpenStruct.new(element)}
+      end
     end
 
   end

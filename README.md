@@ -89,6 +89,77 @@ else         # if response.error?
 end
 ```
 
+### Managin sets
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# create set object
+set = client.set # or SmartRouting::User::Set.new(client)
+
+# create set
+response = set.create(name: "AllowedCountries", value: ["UK", "FR"])
+if response.success?
+   puts "Status code" + response.status   # should return 201
+   puts "Set with ID #{response.data.id} is created"
+   puts response.data.to_h                # all set attributes as hash
+   # or
+   puts response.data.value
+   puts response.data.name
+   puts response.data.created_at
+   puts response.data.updated_at
+   puts response.data.read_only   # if this attribute is true you can not update it (this set was created by admin)
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+  puts response.error.code
+  puts response.error.message             # message for developers
+  puts response.error.friendly_message    # message for users
+  puts response.error.help
+
+  # if  response.error.code == "validation_error"
+  # you can retrieve all error attributes as hash
+  subject.error.errors                    # => {"name" => ["can't be blank"], "value" => ["is invalid"]}
+end
+
+# update set
+response = set.update("111111-a343-4b24-9b03-7e1c360f7467", value: ["FR", "DE"])
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all set attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get set
+response = set.get("111111-a343-4b24-9b03-7e1c360f7467")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all set attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get all sets
+response = set.all
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data                    # array of all sets
+   response.data.each do |item|
+     puts "item attributes: #{item.to_h}" # all set attributes as hash for current item
+     # or
+     puts "Set name:  #{item.name}"
+     puts "Set value: #{item.value}"
+     puts "Read only? #{item.read_only}"
+   end
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+```
+
 ### Rule verification
 
 ```ruby
