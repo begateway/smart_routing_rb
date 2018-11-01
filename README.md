@@ -298,6 +298,93 @@ else         # if response.error?
 end
 ```
 
+### Managin rules
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# create rule object
+rule = client.rule # or SmartRouting::User::Rule.new(client)
+
+# create rule
+description = "if bin_country == UK than return EU_GATEWAY"
+conditions = [{"field" => "bin_country", "operation" => "equal", "value" => "UK"}]
+object_id = "54a8b3c0-2b59-4d5d-b9a6-329dc7a78f90"
+response = client.rule.create(alias: "bin_country", active: true, priority: 5,
+                              description: description, conditions: conditions,
+                              objects: [object_id], handing_out_method: "weight",
+                              weights: {object_id => 10})
+if response.success?
+   puts "Status code" + response.status   # should return 201
+   puts "Rule with ID #{response.data.id} is created"
+   puts response.data.to_h                # all rule attributes as hash
+   # or
+   puts response.data.alias
+   puts response.data.description
+   puts response.data.conditions
+   puts response.data.active
+   puts response.data.priority
+   puts response.data.objects
+   puts response.data.handing_out_method
+   puts response.data.weights
+   puts response.data.created_at
+   puts response.data.updated_at
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+  puts response.error.code
+  puts response.error.message             # message for developers
+  puts response.error.friendly_message    # message for users
+  puts response.error.help
+
+  # if  response.error.code == "validation_error"
+  # you can retrieve all error attributes as hash
+  subject.error.errors                    # => {"alias" => ["can't be blank"]}
+end
+
+# update rule
+response = rule.update("111111-a343-4b24-9b03-7e1c360f7467", alias: "bin_country_uk")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all rule attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get rule
+response = rule.get("111111-a343-4b24-9b03-7e1c360f7467")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all rule attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get all rules
+response = rule.all
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data                    # array of all rule
+   response.data.each do |item|
+     puts "item attributes: #{item.to_h}" # all rule attributes as hash for current item
+     # or
+     puts "Rule alias:  #{item.alias}"
+     puts "Rule description:  #{item.description}"
+     puts "Rule conditions: #{item.conditions}"
+     puts "Rule active?: #{item.active}"
+     puts "Rule priority: #{item.priority}"
+     puts "Rule objects: #{item.objects}"
+     puts "Rule handing out method: #{item.handing_out_method}"
+     puts "Rule weights: #{item.weights}"
+   end
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+```
+
 ### Rule verification
 
 ```ruby
