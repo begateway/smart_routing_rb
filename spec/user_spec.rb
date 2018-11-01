@@ -36,4 +36,12 @@ RSpec.describe SmartRouting::User do
     end
   end
 
+  context ".object" do
+    subject { described_class.new(options).object }
+
+    it "returns instance of SmartRouting::User::Object" do
+      expect(subject).to be_an_instance_of(SmartRouting::User::Object)
+    end
+  end
+
 end

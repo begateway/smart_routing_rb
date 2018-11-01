@@ -1,6 +1,7 @@
 module UserResponseFixtures
   extend self
 
+  # rule
   def successful_verify_rules_matched_response
     %!{"data":{"rules":[{"state":"matched","description":"if bin_country == UK than return EU_GATEWAY","alias":"card_bin_country"}],"object":"125"}}!
   end
@@ -13,6 +14,7 @@ module UserResponseFixtures
     %!{"error":{"message":"Parameters are invalid","help":"https://doc.begateway.com/codes/validation_error","friendly_message":"Bin_country must be string.","errors":{"bin_country":["must be string"]},"code":"validation_error"}}!
   end
 
+  # set
   def successful_creation_set_response
     %!{"data":{"value":["UK","FR","DE"],"updated_at":"2018-10-31T09:42:59.481017","read_only":false,"name":"AllowedCountries","id":"9959bd69-50a9-44a6-8691-deb41f6d3bc5","created_at":"2018-10-31T09:42:59.478386","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"}}!
   end
@@ -37,6 +39,7 @@ module UserResponseFixtures
      %!{"data":[{"value":["UK","FR","DE"],"updated_at":"2018-10-31T09:42:59.481017","read_only":false,"name":"AllowedCountries","id":"9959bd69-50a9-44a6-8691-deb41f6d3bc5","created_at":"2018-10-31T09:42:59.478386","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"},{"value":["PL","LT","LV"],"updated_at":"2018-09-03T13:03:52.961448","read_only":false,"name":"EUCountries","id":"321cb140-f492-48e4-bf17-ccd90146b084","created_at":"2018-09-03T13:03:52.961438","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"},{"value":["AZ","AF"],"updated_at":"2018-09-03T13:03:34.457478","read_only":false,"name":"BlockCountries","id":"c763e2a8-8bc7-44cb-bbd0-172a7a17fb5e","created_at":"2018-09-03T13:03:34.457466","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"}]}!
   end
 
+  # object_type
   def successful_creation_object_type_response
     %!{"data":{"updated_at":"2018-11-01T08:25:10.368248","name":"gw_EU","id":"1da2d4f0-ba1f-4ec2-aea4-10c9b791a2c8","created_at":"2018-11-01T08:25:10.368200","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"}}!
   end
@@ -60,5 +63,33 @@ module UserResponseFixtures
   def successful_all_object_type_response
      %!{"data":[{"updated_at":"2018-11-01T08:25:10.368248","name":"gw_EU","id":"1da2d4f0-ba1f-4ec2-aea4-10c9b791a2c8","created_at":"2018-11-01T08:25:10.368200","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"},{"updated_at":"2018-09-13T12:25:13.975479","name":"gateway","id":"02c07bce-3a10-418e-9d77-d2c57c9bc71c","created_at":"2018-09-13T12:25:13.975468","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"}]}!
   end
+
+  # object
+  def successful_creation_object_response
+    %!{"data":{"updated_at":"2018-11-01T10:24:23.308025","type_id":"02c07bce-3a10-418e-9d77-d2c57c9bc71c","output_value":"1288","name":"gw_UK","id":"54a8b3c0-2b59-4d5d-b9a6-329dc7a78f90","created_at":"2018-11-01T10:24:23.308016","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"}}!
+  end
+
+  def failed_creation_object_response
+    %!{"error":{"message":"Parameters are invalid","help":"https://doc.ecomcharge.com/codes/validation_error","friendly_message":"Output_value can't be blank.","errors":{"output_value":["can't be blank"]},"code":"validation_error"}}!
+  end
+
+  def successful_update_object_response
+    successful_creation_object_response.sub(/gw_UK/, "gw_BY").
+      sub(/1288/, "1599")
+  end
+
+  def failed_update_object_response
+    failed_creation_object_response
+  end
+
+  def successful_get_object_response
+    successful_creation_object_response
+  end
+
+  def successful_all_object_response
+     %!{"data":[{"updated_at":"2018-11-01T10:24:23.308025","type_id":"02c07bce-3a10-418e-9d77-d2c57c9bc71c","output_value":"1288","name":"gw_UK","id":"54a8b3c0-2b59-4d5d-b9a6-329dc7a78f90","created_at":"2018-11-01T10:24:23.308016","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"},{"updated_at":"2018-09-13T12:31:14.705757","type_id":"02c07bce-3a10-418e-9d77-d2c57c9bc71c","output_value":"525","name":"gw_2","id":"b2ff52fb-6bc3-49c9-902f-620e3732131c","created_at":"2018-09-13T12:31:14.705746","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"},{"updated_at":"2018-09-13T12:31:00.046856","type_id":"02c07bce-3a10-418e-9d77-d2c57c9bc71c","output_value":"125","name":"gw_1","id":"2df0ba21-9af5-49c6-8b82-9028f9bbf883","created_at":"2018-09-13T12:31:00.046845","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"}]}!
+  end
+
+
 
 end

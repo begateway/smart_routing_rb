@@ -1,5 +1,6 @@
 require_relative "user/rule"
 require_relative "user/set"
+require_relative "user/object"
 require_relative "user/object_type"
 
 module SmartRouting
@@ -23,6 +24,10 @@ module SmartRouting
 
     def object_type
       @object_type ||= User::ObjectType.new(self)
+    end
+
+    def object
+      @object ||= User::Object.new(self)
     end
 
   end
