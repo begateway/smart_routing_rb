@@ -3,6 +3,7 @@ require "shared_examples/responses"
 RSpec.describe SmartRouting::User::Set do
   let(:set) { described_class.new(user_client) }
   let(:data_attrs)  { %i(id name value read_only created_at updated_at account_id) }
+  let(:error_keys)  { %i(code message friendly_message help errors) }
 
   context ".create" do
     let(:url) { SmartRouting.api_host + "/api/user/sets" }
@@ -23,7 +24,6 @@ RSpec.describe SmartRouting::User::Set do
     context "when params are invalid" do
       let(:request_params) { {name: nil} }
       let(:http_status) { 422 }
-      let(:error_keys)  { %i(code message friendly_message help errors) }
 
       before do
         stub_request(:post, url).with(body: {set: request_params}.to_json).
@@ -54,7 +54,6 @@ RSpec.describe SmartRouting::User::Set do
     context "when params are invalid" do
       let(:request_params) { {} }
       let(:http_status) { 422 }
-      let(:error_keys)  { %i(code message friendly_message help errors) }
 
       before do
         stub_request(:put, url).with(body: {set: request_params}.to_json).

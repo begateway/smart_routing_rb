@@ -160,6 +160,73 @@ else         # if response.error?
 end
 ```
 
+### Managin object_types
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# create object_type object
+object_type = client.object_type # or SmartRouting::User::ObjectType.new(client)
+
+# create object_type
+response = object_type.create(name: "gw_EU")
+if response.success?
+   puts "Status code" + response.status   # should return 201
+   puts "ObjectType with ID #{response.data.id} is created"
+   puts response.data.to_h                # all object_type attributes as hash
+   # or
+   puts response.data.name
+   puts response.data.created_at
+   puts response.data.updated_at
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+  puts response.error.code
+  puts response.error.message             # message for developers
+  puts response.error.friendly_message    # message for users
+  puts response.error.help
+
+  # if  response.error.code == "validation_error"
+  # you can retrieve all error attributes as hash
+  subject.error.errors                    # => {"name" => ["can't be blank"]}
+end
+
+# update object_type
+response = object_type.update("111111-a343-4b24-9b03-7e1c360f7467", name: "gw_Europe")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all object_type attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get object_type
+response = object_type.get("111111-a343-4b24-9b03-7e1c360f7467")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all object_type attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get all object_types
+response = object_type.all
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data                    # array of all object_types
+   response.data.each do |item|
+     puts "item attributes: #{item.to_h}" # all object_type attributes as hash for current item
+     # or
+     puts "ObjectType name:  #{item.name}"
+   end
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+```
+
 ### Rule verification
 
 ```ruby
