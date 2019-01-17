@@ -89,6 +89,302 @@ else         # if response.error?
 end
 ```
 
+### Managin sets
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# create set object
+set = client.set # or SmartRouting::User::Set.new(client)
+
+# create set
+response = set.create(name: "AllowedCountries", value: ["UK", "FR"])
+if response.success?
+   puts "Status code" + response.status   # should return 201
+   puts "Set with ID #{response.data.id} is created"
+   puts response.data.to_h                # all set attributes as hash
+   # or
+   puts response.data.value
+   puts response.data.name
+   puts response.data.created_at
+   puts response.data.updated_at
+   puts response.data.read_only   # if this attribute is true you can not update it (this set was created by admin)
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+  puts response.error.code
+  puts response.error.message             # message for developers
+  puts response.error.friendly_message    # message for users
+  puts response.error.help
+
+  # if  response.error.code == "validation_error"
+  # you can retrieve all error attributes as hash
+  subject.error.errors                    # => {"name" => ["can't be blank"], "value" => ["is invalid"]}
+end
+
+# update set
+response = set.update("111111-a343-4b24-9b03-7e1c360f7467", value: ["FR", "DE"])
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all set attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get set
+response = set.get("111111-a343-4b24-9b03-7e1c360f7467")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all set attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get all sets
+response = set.all
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data                    # array of all sets
+   response.data.each do |item|
+     puts "item attributes: #{item.to_h}" # all set attributes as hash for current item
+     # or
+     puts "Set name:  #{item.name}"
+     puts "Set value: #{item.value}"
+     puts "Read only? #{item.read_only}"
+   end
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+```
+
+### Managin object_types
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# create object_type object
+object_type = client.object_type # or SmartRouting::User::ObjectType.new(client)
+
+# create object_type
+response = object_type.create(name: "gw_EU")
+if response.success?
+   puts "Status code" + response.status   # should return 201
+   puts "ObjectType with ID #{response.data.id} is created"
+   puts response.data.to_h                # all object_type attributes as hash
+   # or
+   puts response.data.name
+   puts response.data.created_at
+   puts response.data.updated_at
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+  puts response.error.code
+  puts response.error.message             # message for developers
+  puts response.error.friendly_message    # message for users
+  puts response.error.help
+
+  # if  response.error.code == "validation_error"
+  # you can retrieve all error attributes as hash
+  subject.error.errors                    # => {"name" => ["can't be blank"]}
+end
+
+# update object_type
+response = object_type.update("111111-a343-4b24-9b03-7e1c360f7467", name: "gw_Europe")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all object_type attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get object_type
+response = object_type.get("111111-a343-4b24-9b03-7e1c360f7467")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all object_type attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get all object_types
+response = object_type.all
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data                    # array of all object_types
+   response.data.each do |item|
+     puts "item attributes: #{item.to_h}" # all object_type attributes as hash for current item
+     # or
+     puts "ObjectType name:  #{item.name}"
+   end
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+```
+
+### Managin objects
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# create object
+object = client.object # or SmartRouting::User::Object.new(client)
+
+# create object
+type_id = "02c07bce-3a10-418e-9d77-d2c57c9bc71c"
+response = object.create(name: "gw_UK", output_value: "1288", type_id: type_id)
+if response.success?
+   puts "Status code" + response.status   # should return 201
+   puts "Object with ID #{response.data.id} is created"
+   puts response.data.to_h                # all object attributes as hash
+   # or
+   puts response.data.name
+   puts response.data.output_value
+   puts response.data.type_id
+   puts response.data.created_at
+   puts response.data.updated_at
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+  puts response.error.code
+  puts response.error.message             # message for developers
+  puts response.error.friendly_message    # message for users
+  puts response.error.help
+
+  # if  response.error.code == "validation_error"
+  # you can retrieve all error attributes as hash
+  subject.error.errors                    # => {"name" => ["can't be blank"]}
+end
+
+# update object
+response = object.update("111111-a343-4b24-9b03-7e1c360f7467", name: "gw_BY")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all object attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get object
+response = object.get("111111-a343-4b24-9b03-7e1c360f7467")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all object attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get all object
+response = object.all
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data                    # array of all object
+   response.data.each do |item|
+     puts "item attributes: #{item.to_h}" # all object attributes as hash for current item
+     # or
+     puts "Object name:  #{item.name}"
+     puts "Object output_value:  #{item.output_value}"
+   end
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+```
+
+### Managin rules
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# create rule object
+rule = client.rule # or SmartRouting::User::Rule.new(client)
+
+# create rule
+description = "if bin_country == UK than return EU_GATEWAY"
+conditions = [{"field" => "bin_country", "operation" => "equal", "value" => "UK"}]
+object_id = "54a8b3c0-2b59-4d5d-b9a6-329dc7a78f90"
+response = client.rule.create(alias: "bin_country", active: true, priority: 5,
+                              description: description, conditions: conditions,
+                              objects: [object_id], handing_out_method: "weight",
+                              weights: {object_id => 10})
+if response.success?
+   puts "Status code" + response.status   # should return 201
+   puts "Rule with ID #{response.data.id} is created"
+   puts response.data.to_h                # all rule attributes as hash
+   # or
+   puts response.data.alias
+   puts response.data.description
+   puts response.data.conditions
+   puts response.data.active
+   puts response.data.priority
+   puts response.data.objects
+   puts response.data.handing_out_method
+   puts response.data.weights
+   puts response.data.created_at
+   puts response.data.updated_at
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+  puts response.error.code
+  puts response.error.message             # message for developers
+  puts response.error.friendly_message    # message for users
+  puts response.error.help
+
+  # if  response.error.code == "validation_error"
+  # you can retrieve all error attributes as hash
+  subject.error.errors                    # => {"alias" => ["can't be blank"]}
+end
+
+# update rule
+response = rule.update("111111-a343-4b24-9b03-7e1c360f7467", alias: "bin_country_uk")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all rule attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get rule
+response = rule.get("111111-a343-4b24-9b03-7e1c360f7467")
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all rule attributes as hash
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+
+# get all rules
+response = rule.all
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data                    # array of all rule
+   response.data.each do |item|
+     puts "item attributes: #{item.to_h}" # all rule attributes as hash for current item
+     # or
+     puts "Rule alias:  #{item.alias}"
+     puts "Rule description:  #{item.description}"
+     puts "Rule conditions: #{item.conditions}"
+     puts "Rule active?: #{item.active}"
+     puts "Rule priority: #{item.priority}"
+     puts "Rule objects: #{item.objects}"
+     puts "Rule handing out method: #{item.handing_out_method}"
+     puts "Rule weights: #{item.weights}"
+   end
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
+```
+
 ### Rule verification
 
 ```ruby

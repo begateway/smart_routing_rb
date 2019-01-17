@@ -1,6 +1,6 @@
 module SmartRouting
   class User
-    class Rule
+    class Object
 
       attr_reader :client
 
@@ -9,11 +9,11 @@ module SmartRouting
       end
 
       def create(params)
-        SmartRouting::Response.new client.request(:post, resource_path, {rule: params})
+        SmartRouting::Response.new client.request(:post, resource_path, {object: params})
       end
 
       def update(id, params)
-        SmartRouting::Response.new client.request(:put, resource_path(id), {rule: params})
+        SmartRouting::Response.new client.request(:put, resource_path(id), {object: params})
       end
 
       def get(id)
@@ -24,13 +24,9 @@ module SmartRouting
         SmartRouting::Response.new client.request(:get, resource_path)
       end
 
-      def verify(params)
-        SmartRouting::Response.new client.request(:post, resource_path + "/verify", {fields: params})
-      end
-
       private
       def resource_path(id = nil)
-        "/api/user/rules".tap do |path|
+        "/api/user/objects".tap do |path|
           path << "/#{id}" if id
         end
       end
