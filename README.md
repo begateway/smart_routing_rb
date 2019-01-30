@@ -424,7 +424,7 @@ data_obj = client.data # or SmartRouting::User::Data.new(client)
 
 # add data
 created_at = Time.now.utc.iso8601(3) # when there is ActiveSupport
-response = data.add(created_at: created_at, txn_amount: 100, txn_currency: "BYN", txn_type: "capture")
+response = data_obj.add(created_at: created_at, txn_amount: 100, txn_currency: "BYN", txn_type: "capture")
 if response.success?
    puts "Status code" + response.status   # should return 204
 else         # if response.error?
