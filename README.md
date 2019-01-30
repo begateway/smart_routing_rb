@@ -65,7 +65,7 @@ else         # if response.error?
 
   # if  response.error.code == "validation_error"
   # you can retrieve all error attributes as hash
-  subject.error.errors                    # => {"name" => ["can't be blank"], "email" => ["is invalid"]}
+  response.error.errors                    # => {"name" => ["can't be blank"], "email" => ["is invalid"]}
 end
 
 # get account
@@ -89,7 +89,7 @@ else         # if response.error?
 end
 ```
 
-### Managin sets
+### Managing sets
 
 ```ruby
 # create user client
@@ -119,7 +119,7 @@ else         # if response.error?
 
   # if  response.error.code == "validation_error"
   # you can retrieve all error attributes as hash
-  subject.error.errors                    # => {"name" => ["can't be blank"], "value" => ["is invalid"]}
+  response.error.errors                    # => {"name" => ["can't be blank"], "value" => ["is invalid"]}
 end
 
 # update set
@@ -160,7 +160,7 @@ else         # if response.error?
 end
 ```
 
-### Managin object_types
+### Managing object_types
 
 ```ruby
 # create user client
@@ -188,7 +188,7 @@ else         # if response.error?
 
   # if  response.error.code == "validation_error"
   # you can retrieve all error attributes as hash
-  subject.error.errors                    # => {"name" => ["can't be blank"]}
+  response.error.errors                    # => {"name" => ["can't be blank"]}
 end
 
 # update object_type
@@ -227,7 +227,7 @@ else         # if response.error?
 end
 ```
 
-### Managin objects
+### Managing objects
 
 ```ruby
 # create user client
@@ -258,7 +258,7 @@ else         # if response.error?
 
   # if  response.error.code == "validation_error"
   # you can retrieve all error attributes as hash
-  subject.error.errors                    # => {"name" => ["can't be blank"]}
+  response.error.errors                    # => {"name" => ["can't be blank"]}
 end
 
 # update object
@@ -339,7 +339,7 @@ else         # if response.error?
 
   # if  response.error.code == "validation_error"
   # you can retrieve all error attributes as hash
-  subject.error.errors                    # => {"alias" => ["can't be blank"]}
+  response.error.errors                    # => {"alias" => ["can't be blank"]}
 end
 
 # update rule
@@ -412,6 +412,34 @@ end
 # for testing verification you should sendt test = true
 response = rule.verify(test: true, bin_country: "UK", card_bin: "US")
  ```
+
+
+### Adding data (after finalizing transaction)
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# create data object
+data_obj = client.data # or SmartRouting::User::Data.new(client)
+
+# add data
+created_at = Time.now.utc.iso8601(3) # when there is ActiveSupport
+response = data_obj.add(created_at: created_at, txn_amount: 100, txn_currency: "BYN", txn_type: "capture")
+if response.success?
+   puts "Status code" + response.status   # should return 204
+else         # if response.error?
+  puts "Status code" + response.status    # may be 422
+  puts response.error.to_h                # all error attributes as hash
+  puts response.error.code
+  puts response.error.message             # message for developers
+  puts response.error.friendly_message    # message for users
+  puts response.error.help
+
+  # if  response.error.code == "validation_error"
+  # you can retrieve all error attributes as hash
+  response.error.errors                    # => {"created_at" => ["can't be blank"]}
+end
+
 
 ## Development
 

@@ -114,4 +114,9 @@ module UserResponseFixtures
      %!{"data":[{"updated_at":"2018-11-01T10:24:23.308025","type_id":"02c07bce-3a10-418e-9d77-d2c57c9bc71c","output_value":"1288","name":"gw_UK","id":"54a8b3c0-2b59-4d5d-b9a6-329dc7a78f90","created_at":"2018-11-01T10:24:23.308016","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"},{"updated_at":"2018-09-13T12:31:14.705757","type_id":"02c07bce-3a10-418e-9d77-d2c57c9bc71c","output_value":"525","name":"gw_2","id":"b2ff52fb-6bc3-49c9-902f-620e3732131c","created_at":"2018-09-13T12:31:14.705746","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"},{"updated_at":"2018-09-13T12:31:00.046856","type_id":"02c07bce-3a10-418e-9d77-d2c57c9bc71c","output_value":"125","name":"gw_1","id":"2df0ba21-9af5-49c6-8b82-9028f9bbf883","created_at":"2018-09-13T12:31:00.046845","account_id":"10429c03-a343-4b24-9b03-7e1c360f7467"}]}!
   end
 
+  # data
+  def failed_adding_data_response
+    %!{"error":{"message":"Parameters are invalid","help":"https://doc.ecomcharge.com/codes/validation_error","friendly_message":"Created_at can't be blank.","errors":{"created_at":["can't be blank"]},"code":"validation_error"}}!
+  end
+
 end
