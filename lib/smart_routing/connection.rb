@@ -26,13 +26,15 @@ module SmartRouting
     def connection
       @connection ||=
         begin
-          connection = Faraday.new(url: SmartRouting.api_host, proxy: SmartRouting.proxy)
+          connection = Faraday.new(url: SmartRouting.api_host, proxy: SmartRouting.proxy) do |conn|
+            conn.basic_auth(auth_login, auth_password) if auth_login
+            conn.request :json
+            conn.request :request_logger
+            conn.response :parse_json
+            conn.response :response_logger
 
-          connection.basic_auth(auth_login, auth_password) if auth_login
-          connection.request :json
-          connection.request :request_logger
-          connection.response :parse_json
-          connection.response :response_logger
+            conn.adapter Faraday.default_adapter
+          end
 
           connection
         end
