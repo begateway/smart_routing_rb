@@ -19,7 +19,7 @@ GEM
     hashdiff (0.3.7)
     multipart-post (2.0.0)
     public_suffix (3.0.3)
-    rake (10.5.0)
+    rake (13.0.1)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -47,7 +47,7 @@ DEPENDENCIES
   byebug
   faraday (~> 0.15.3)
   faraday_middleware (~> 0.12.2)
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec (~> 3.0)
   smart_routing!
   webmock (~> 3.4.2)
