@@ -7,7 +7,7 @@ module SmartRouting
           begin
             request_id = env.request_headers['X-Request-Id']
             if request_id.to_s.size > 0
-              "  (#{request_id})"
+              "  (##{request_id})"
             else
               ""
             end

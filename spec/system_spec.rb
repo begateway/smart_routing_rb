@@ -35,11 +35,11 @@ RSpec.describe "system" do
 
       it "writes request_id to request and to response" do
         # request
-        expect(subject).to include("Request: start POST to #{url}  (#{request_id})")
-        expect(subject).to include("{\"account\":#{data.to_json}}  (#{request_id})")
+        expect(subject).to include("Request: start POST to #{url}  (##{request_id})")
+        expect(subject).to include("{\"account\":#{data.to_json}}  (##{request_id})")
         # response
-        expect(subject).to include("Response: status 201   (#{request_id})")
-        expect(subject).to match(/token.+ \(#{request_id}\)/)
+        expect(subject).to include("Response: status 201   (##{request_id})")
+        expect(subject).to match(/token.+ \(##{request_id}\)/)
       end
 
       it "adds X-Request-Id passed header to response headers" do
