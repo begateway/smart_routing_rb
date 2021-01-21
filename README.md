@@ -39,7 +39,7 @@ SmartRouting.read_timeout = 10 # default: 40
 
 ### Headers
 
-You can pass request id to client
+You can pass any headers to request, see example to add request id:
 ```ruby
 headers = {'X-Request-Id' => 'some-request-id-2'}
 # admin client
