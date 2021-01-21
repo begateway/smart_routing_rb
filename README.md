@@ -37,6 +37,18 @@ SmartRouting.open_timeout = 5  # default: 20
 SmartRouting.read_timeout = 10 # default: 40
 ```
 
+### Headers
+
+You can pass request id to client
+```ruby
+headers = {'X-Request-Id' => 'some-request-id-2'}
+# admin client
+client = SmartRouting::Admin.new(auth_login: 'login', auth_password: 'password', headers: headers)
+# or
+# user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token', headers: headers)
+```
+
 ### Managing accounts
 
 ```ruby
