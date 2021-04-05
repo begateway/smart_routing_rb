@@ -104,13 +104,13 @@ RSpec.describe SmartRouting::User::Rule do
 
   context ".verify" do
     let(:url) { SmartRouting.api_host + "/api/user/rules/verify" }
-    let(:params) { {bin_country: "UK"} }
+    let(:params) {{ fields: {bin_country: "UK"}, allowable_return_values: ['1'] }}
 
     subject { rule.verify(params) }
 
     context "when params are valid and rule matched" do
       before do
-        stub_request(:post, url).with(body: {fields: params}.to_json).
+        stub_request(:post, url).with(body: {data: params}.to_json).
           to_return(status: 200, body: UserResponseFixtures.successful_verify_rules_matched_response)
       end
 
@@ -133,7 +133,7 @@ RSpec.describe SmartRouting::User::Rule do
 
     context "when params are valid add rule not matched" do
       before do
-        stub_request(:post, url).with(body: {fields: params}.to_json).
+        stub_request(:post, url).with(body: {data: params}.to_json).
           to_return(status: 200, body: UserResponseFixtures.successful_verify_rules_not_matched_response)
       end
 
@@ -154,10 +154,10 @@ RSpec.describe SmartRouting::User::Rule do
     end
 
     context "when params are invalid" do
-      let(:params) { {bin_country: nil} }
+      let(:params) {{ fields: {bin_country: nil}, allowable_return_values: ['1']}}
 
       before do
-        stub_request(:post, url).with(body: {fields: params}.to_json).
+        stub_request(:post, url).with(body: {data: params}.to_json).
           to_return(status: 422, body: UserResponseFixtures.failed_verify_rules_response)
       end
 
