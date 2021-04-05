@@ -25,16 +25,21 @@ module SmartRouting
       end
 
       def verify(params)
-        SmartRouting::Response.new client.request(:post, resource_path + "/verify", {fields: params})
+        SmartRouting::Response.new client.request(:post,
+                                                  resource_path + "/verify",
+                                                  data: {
+                                                    fields: params[:fields],
+                                                    allowable_return_values: params[:allowable_return_values]
+                                                  })
       end
 
       private
+
       def resource_path(id = nil)
         "/api/user/rules".tap do |path|
           path << "/#{id}" if id
         end
       end
-
     end
   end
 end
