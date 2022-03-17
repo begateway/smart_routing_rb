@@ -13,8 +13,10 @@ module SmartRouting
       connection.public_send(method, path, params) do |request|
         request.headers.update(headers) if headers
 
+        request.headers['Accept'] = 'application/vnd.smart-routing.v2+json'
+
         if [:put, :post].include?(method)
-          request.headers['Content-Type'] = 'application/json'
+          request.headers['Content-Type'] = 'application/vnd.smart-routing.v2+json'
           request.body = params.to_json if params
         end
         request.options.timeout = SmartRouting.read_timeout if SmartRouting.read_timeout
