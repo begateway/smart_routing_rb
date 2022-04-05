@@ -3,6 +3,7 @@ require_relative "user/set"
 require_relative "user/data"
 require_relative "user/object"
 require_relative "user/object_type"
+require_relative "user/ai"
 
 module SmartRouting
   class User
