@@ -37,5 +37,8 @@ module SmartRouting
       @data ||= User::Data.new(self)
     end
 
+    def ai
+      @ai ||= User::AI.new(self)
+    end
   end
 end
