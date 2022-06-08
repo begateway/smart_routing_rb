@@ -48,7 +48,10 @@ module SmartRouting
     end
 
     def flow_rule(flow_id)
-      @flow_rule ||= User::FlowRule.new(self, flow_id: flow_id)
+      @flow_rule ||= Hash.new do |hash, key|
+        hash[key] = User::FlowRule.new(self, flow_id: flow_id)
+      end
+      @flow_rule[flow_id]
     end
   end
 end
