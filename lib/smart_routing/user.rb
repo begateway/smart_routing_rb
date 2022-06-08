@@ -4,6 +4,7 @@ require_relative "user/data"
 require_relative "user/object"
 require_relative "user/object_type"
 require_relative "user/ai"
+require_relative 'user/flow'
 require_relative 'user/flow_rule'
 
 module SmartRouting
@@ -40,6 +41,10 @@ module SmartRouting
 
     def ai
       @ai ||= User::AI.new(self)
+    end
+
+    def flow
+      @flow ||= User::Flow.new(self)
     end
 
     def flow_rule(flow_id)
