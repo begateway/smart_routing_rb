@@ -119,4 +119,40 @@ module UserResponseFixtures
     %!{"error":{"message":"Parameters are invalid","help":"https://doc.ecomcharge.com/codes/validation_error","friendly_message":"Created_at can't be blank.","errors":{"created_at":["can't be blank"]},"code":"validation_error"}}!
   end
 
+  # flow
+  def successful_verify_flows_matched_response
+    %!{"data": {"status": "passed","object_rules": [{"state": "matched","description": "desc2","alias": "rule_2"}],"object_name": "gw1","object_defined_via": "rule","object": "1245","action_rules": {"account_shop": {"rule_2": {"rule_description": "skipped"},"rule_1": {"rule_description": "allow"}},"account_psp": {"rule_9": {"rule_description": "allow"},"rule_8": {"rule_description": "skipped"},"rule_7": {"rule_description": "passed"}},"account_merchant": {"rule_6": {"rule_description": "passed"},"rule_5": {"rule_description": "passed"},"rule_3": {"rule_description": "allow"}}}}}!
+  end
+
+  def successful_verify_flows_not_matched_response
+    %!{"data": {"status": "passed","object_rules": [{"state": "not_matched","description": "desc0","alias": "rule_0"}],"object_name": "gw1","object_defined_via": "rule","object": "1245","action_rules": {"account_shop": {"rule_2": {"rule_description": "skipped"},"rule_1": {"rule_description": "allow"}},"account_psp": {"rule_9": {"rule_description": "allow"},"rule_8": {"rule_description": "skipped"},"rule_7": {"rule_description": "passed"}},"account_merchant": {"rule_6": {"rule_description": "passed"},"rule_5": {"rule_description": "passed"},"rule_3": {"rule_description": "allow"}}}}}!
+  end
+
+  def failed_verify_flows_response
+    %!{"error": {"message": "Parameters are invalid","help": "https://doc.ecomcharge.com/codes/validation_error","friendly_message": "Name can't be blank. Value must be an array of strings","errors": {"value": ["must be an array of strings"],"name": ["can't be blank"]},"code": "validation_error"}}!
+  end
+
+  def successful_creation_flow_response
+    %!{"data": {"type": "object","system": false,"rule_processing_order": "random","priority": 220,"name": "Test flow","id": "ba5519ab-2864-4914-bcd1-11c138607393","description": "Something about flow","active": true,"account_id": "ac605867-b6c3-455d-aeb8-6bb1130b8271"}}!
+  end
+
+  def failed_creation_flow_response
+    %!{"error": {"message": "Parameters are invalid","help": "https://doc.ecomcharge.com/codes/validation_error","friendly_message": "Name can't be blank. Value must be an array of strings","errors": {"value": ["must be an array of strings"],"name": ["can't be blank"]},"code": "validation_error"}}!
+  end
+
+  def successful_update_flow_response
+    successful_creation_flow_response.sub(/"priority": 220/, '"priority": 200')
+  end
+
+  def failed_update_flow_response
+    failed_creation_flow_response
+  end
+
+  def successful_get_flow_response
+    successful_creation_flow_response
+  end
+
+  def successful_all_flow_response
+    %!{"data": [{"type": "object","system": false,"rule_processing_order": "random","priority": 220,"name": "Test flow","id": "ba5519ab-2864-4914-bcd1-11c138607393","description": "Something about flow","active": true,"account_id": "ac605867-b6c3-455d-aeb8-6bb1130b8271"},{"type": "action","system": false,"rule_processing_order": "sequential","priority": 245,"name": "One more test flow","id": "41f0e0a3-a44e-4700-af4c-f326c033515f","description": "Something about flow","active": false,"account_id": "cc921c6a-7eaf-4f47-a8ea-bf2a18fa1b42"}]}!
+  end
 end
