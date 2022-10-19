@@ -104,7 +104,7 @@ RSpec.describe SmartRouting::User::Rule do
 
   context ".verify" do
     let(:url) { SmartRouting.api_host + "/api/user/rules/verify" }
-    let(:params) {{ fields: {bin_country: "UK"}, allowable_return_values: ['1'] }}
+    let(:params) {{ fields: {bin_country: "UK"}, allowable_return_values: ['1'], options: {} }}
 
     subject { rule.verify(params) }
 
@@ -154,7 +154,7 @@ RSpec.describe SmartRouting::User::Rule do
     end
 
     context "when params are invalid" do
-      let(:params) {{ fields: {bin_country: nil}, allowable_return_values: ['1']}}
+      let(:params) {{ fields: {bin_country: nil}, allowable_return_values: ['1'], options: {} }}
 
       before do
         stub_request(:post, url).with(body: {data: params}.to_json).

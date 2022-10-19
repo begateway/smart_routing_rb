@@ -5,7 +5,7 @@ RSpec.describe SmartRouting::User::AI do
 
   context ".verify" do
     let(:url) { SmartRouting.api_host + "/api/user/ai/verify" }
-    let(:params) {{ fields: {bin_country: "UK"}, allowable_return_values: ['1'] }}
+    let(:params) {{ fields: {bin_country: "UK"}, allowable_return_values: ['1'], options: {} }}
 
     subject { ai.verify(params) }
 
@@ -55,7 +55,7 @@ RSpec.describe SmartRouting::User::AI do
     end
 
     context "when params are invalid" do
-      let(:params) {{ fields: {bin_country: nil}, allowable_return_values: ['1']}}
+      let(:params) {{ fields: {bin_country: nil}, allowable_return_values: ['1'], options: {}}}
 
       before do
         stub_request(:post, url).with(body: {data: params}.to_json).
@@ -75,6 +75,31 @@ RSpec.describe SmartRouting::User::AI do
         expect(subject.error.friendly_message).to eq("Bin_country must be string.")
         expect(subject.error.help).to eq("https://doc.begateway.com/codes/validation_error")
         expect(subject.error.errors).to eq("bin_country" => ["must be string"])
+      end
+    end
+
+    context "only specific keys in the request data" do
+      let(:params) do
+        { 
+          fields: {bin_country: nil},
+          allowable_return_values: ['1'],
+          options: { verify_only: ["action_rules"] },
+          some_bad_key: "bad data"
+        }
+      end
+
+      it "data contains only fields, allowable_return_values and options keys" do
+        expect_any_instance_of(SmartRouting::Connection).to receive(:request)
+          .with(:post, "/api/user/ai/verify",
+            { data:
+              {
+                fields: {bin_country: nil},
+                allowable_return_values: ['1'],
+                options: { verify_only: ["action_rules"]}
+              }
+            }).and_return(status: 200, body: UserResponseFixtures.successful_verify_rules_matched_response)
+
+        subject { ai.verify(params) }
       end
     end
   end
