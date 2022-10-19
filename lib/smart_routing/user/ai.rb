@@ -14,7 +14,8 @@ module SmartRouting
             "/api/user/ai/verify",
             data: {
               fields: params[:fields],
-              allowable_return_values: params[:allowable_return_values]
+              allowable_return_values: params[:allowable_return_values],
+              options: params[:options] || {}
             }
           )
         )

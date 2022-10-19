@@ -29,7 +29,8 @@ module SmartRouting
                                                   resource_path + "/verify",
                                                   data: {
                                                     fields: params[:fields],
-                                                    allowable_return_values: params[:allowable_return_values]
+                                                    allowable_return_values: params[:allowable_return_values],
+                                                    options: params[:options] || {}
                                                   })
       end
 

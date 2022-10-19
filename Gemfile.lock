@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart_routing (1.0.0)
+    smart_routing (1.1.1)
 
 GEM
   remote: https://rubygems.org/
