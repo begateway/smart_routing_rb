@@ -6,6 +6,10 @@ require_relative "user/object_type"
 require_relative "user/ai"
 require_relative 'user/flow'
 require_relative 'user/flow_rule'
+require_relative 'user/wbl/base'
+require_relative 'user/wbl/black_lists'
+require_relative 'user/wbl/white_lists'
+require_relative 'user/wbl/united'
 
 module SmartRouting
   class User
@@ -52,6 +56,18 @@ module SmartRouting
         hash[key] = User::FlowRule.new(self, flow_id: key)
       end
       @flow_rule[flow_id]
+    end
+
+    def white_lists
+      @white_lists ||= User::Wbl::WhiteLists.new(self)
+    end
+
+    def black_lists
+      @black_lists ||= User::Wbl::BlackLists.new(self)
+    end
+
+    def wb_lists
+      @wb_lists ||= User::Wbl::United.new(self)
     end
   end
 end

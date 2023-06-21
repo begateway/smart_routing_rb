@@ -155,4 +155,21 @@ module UserResponseFixtures
   def successful_all_flow_response
     %!{"data": [{"type": "object","system": false,"rule_processing_order": "random","priority": 220,"name": "Test flow","id": "ba5519ab-2864-4914-bcd1-11c138607393","description": "Something about flow","active": true,"account_id": "ac605867-b6c3-455d-aeb8-6bb1130b8271"},{"type": "action","system": false,"rule_processing_order": "sequential","priority": 245,"name": "One more test flow","id": "41f0e0a3-a44e-4700-af4c-f326c033515f","description": "Something about flow","active": false,"account_id": "cc921c6a-7eaf-4f47-a8ea-bf2a18fa1b42"}]}!
   end
+
+  #wbl
+  def value_exists_in_wbl
+    %!{"data": [{"attribute": "ip","type": "white"}, {"attribute": "ip","type": "black"}]}!
+  end
+
+  def value_does_not_exists_in_wbl
+    %!{"data": []}!
+  end
+
+  def failed_adding_data_to_wb_list
+    %!{"error":{"message":"Parameters are invalid","help":"https://doc.ecomcharge.com/codes/validation_error","friendly_message":"Type this type doesn't exist.","errors":{"type":["this type doesn't exist"]},"code":"validation_error"}}!
+  end
+
+  def failed_deleting_value_from_wb_list
+    %!{"error":{"message":"Required list delete attrs","help":"https://doc.ecomcharge.com/codes/required_list_delete_attrs","friendly_message":"For delete list must send 'type' with 'value' or 'delete_list'","code":"required_list_delete_attrs"}}!
+  end
 end

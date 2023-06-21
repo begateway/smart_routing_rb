@@ -46,4 +46,27 @@ RSpec.describe SmartRouting::User do
     end
   end
 
+  context ".white_lists" do
+    subject { described_class.new(options).white_lists }
+
+    it "returns instance of SmartRouting::User::Object" do
+      expect(subject).to be_an_instance_of(SmartRouting::User::Wbl::WhiteLists)
+    end
+  end
+
+  context ".black_lists" do
+    subject { described_class.new(options).black_lists }
+
+    it "returns instance of SmartRouting::User::Object" do
+      expect(subject).to be_an_instance_of(SmartRouting::User::Wbl::BlackLists)
+    end
+  end
+
+  context ".wb_lists" do
+    subject { described_class.new(options).wb_lists }
+
+    it "returns instance of SmartRouting::User::Object" do
+      expect(subject).to be_an_instance_of(SmartRouting::User::Wbl::United)
+    end
+  end
 end
