@@ -310,7 +310,7 @@ else         # if response.error?
 end
 ```
 
-### Managin rules
+### Managing rules
 
 ```ruby
 # create user client
@@ -452,6 +452,28 @@ else         # if response.error?
   response.error.errors                    # => {"created_at" => ["can't be blank"]}
 end
 
+```
+### Managing white/black lists (wbl)
+
+```ruby
+# create user client
+client = SmartRouting::User.new(auth_login: 'login', auth_password: 'account token')
+# add item to account's white list
+client.white_list.modify(list: { type: 'email', value: 'white@email.com' })
+# add item to account's black list
+client.black_list.modify(list: { type: 'email', value: 'black@email.com' })
+# remove item from account's white list
+client.white_list.delete(list: { type: 'email', value: 'white@email.com' })
+# remove item from account's black list
+client.black_list.delete(list: { type: 'email', value: 'white@email.com' })
+# for more information about acceptable parameters, see Smart Routing docs
+# a successful request ends with a response with the status 204
+# working with errors is similar to other routes
+
+# check the occurrence of an element in lists of both types
+response = client.wb_lists.exists(list: { type: 'email', value: 'white@email.com' })
+# response  data in format [{"type": "email","list": "black"}]}
+```
 
 ## Development
 
