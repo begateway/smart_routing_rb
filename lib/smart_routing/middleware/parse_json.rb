@@ -18,7 +18,7 @@ module SmartRouting
       def error_response(response)
         {
           "error" =>
-          { "code"    => "invalid_respone",
+          { "code"    => "invalid_response",
             "message" => "Response is not JSON. Status is #{response.status}.",
             "raw_response" => response.body
           }
