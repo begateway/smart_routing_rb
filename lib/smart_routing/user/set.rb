@@ -24,11 +24,19 @@ module SmartRouting
         SmartRouting::Response.new client.request(:get, resource_path)
       end
 
+      def import(id, params)
+        SmartRouting::Response.new client.request(:post, import_path(id), {set: params})
+      end
+
       private
       def resource_path(id = nil)
         "/api/user/sets".tap do |path|
           path << "/#{id}" if id
         end
+      end
+
+      def import_path(id)
+         resource_path(id) + "/import"
       end
 
     end
