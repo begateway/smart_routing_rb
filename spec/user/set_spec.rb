@@ -93,4 +93,35 @@ RSpec.describe SmartRouting::User::Set do
     it_behaves_like "successful items response"
   end
 
+  context ".import" do
+    let(:id) { "10429c03-a343-4b24-9b03-7e1c360f7467" }
+    let(:url) { SmartRouting.api_host + "/api/user/sets/#{id}/import" }
+    let(:request_params) { {mode: "rewrite", file: "MTAwMA0KMjAwMAozMDAwCjQwMDAwCjUwMDA="} }
+    let(:data_attrs)  { %i(added_values skipped_value skipped_rows) }
+    let(:http_status) { 200 }
+
+    subject { set.import(id, request_params) }
+
+    context "when params are valid" do
+      before do
+        stub_request(:post, url).with(body: {set: request_params}.to_json).
+          to_return(status: http_status, body: UserResponseFixtures.successful_import_set_response)
+      end
+
+      it_behaves_like "successful response"
+    end
+
+    context "when params are invalid" do
+      let(:request_params) { {} }
+      let(:http_status) { 422 }
+
+      before do
+        stub_request(:post, url).with(body: {set: request_params}.to_json).
+          to_return(status: http_status, body: UserResponseFixtures.failed_import_set_response)
+      end
+
+      it_behaves_like "error response"
+    end
+  end
+
 end

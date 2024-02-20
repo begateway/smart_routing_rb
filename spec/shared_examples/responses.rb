@@ -7,7 +7,7 @@ RSpec.shared_examples "successful response" do
 
     expect(subject.data.to_h.keys).to contain_exactly *data_attrs
     # check access to attribute as method: subject.data.name
-    respond_to?(:request_params) && request_params.each do |key, value|
+    respond_to?(:request_params) && subject.data.to_h.each do |key, value|
       expect(subject.data.public_send(key)).to eq(value)
     end
   end
