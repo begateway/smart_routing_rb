@@ -170,6 +170,24 @@ else         # if response.error?
   puts "Status code" + response.status   # may be 404
   puts response.error.to_h               # all error attributes as hash
 end
+
+# import set (create file set)
+created_set_response = set.create(name: "AllowedCardMasks", value: [])
+set_id = created_set_response.data.id
+# file: Base64.encode64("content_of_csv_file_with_needed_values") - strict decode - without new lines
+request_params = {mode: "rewrite", file: "MTAwMA0KMjAwMAozMDAwCjQwMDAwCjUwMDA="}
+response = set.import(set_id, request_params)
+if response.success?
+   puts "Status code" + response.status  # should return 200
+   puts response.data.to_h               # all set attributes as hash
+   # or
+   puts response.data.added_values
+   puts response.data.skipped_value
+   puts response.data.skipped_rows
+else         # if response.error?
+  puts "Status code" + response.status   # may be 404
+  puts response.error.to_h               # all error attributes as hash
+end
 ```
 
 ### Managing object_types
